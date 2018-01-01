@@ -2,10 +2,8 @@ import React from 'react';
 import React3 from 'react-three-renderer';
 import * as THREE from 'three';
 import {render} from 'react-dom';
-import FilleniumMalcon from './filleniumMalcon.jsx';
 
 class Simple extends React.Component {
-  
   constructor(props, context) {
     super(props, context);
 
@@ -31,8 +29,7 @@ class Simple extends React.Component {
         ),
       });
     };
-
-  };
+  }
 
   render() {
     const width = window.innerWidth; // canvas width
@@ -55,17 +52,21 @@ class Simple extends React.Component {
 
           position={this.cameraPosition}
         />
-
-        <FilleniumMalcon
-          state={this.state}/>
+        <mesh
+          rotation={this.state.cubeRotation}
+        >
+          <boxGeometry
+            width={1}
+            height={1}
+            depth={1}
+          />
+          <meshBasicMaterial
+            color={0x00ff00}
+          />
+        </mesh>
       </scene>
     </React3>);
-  };
+  }
 }
 render(<Simple/>, document.getElementById('app'));
-
-
-
-
-
 
