@@ -20,13 +20,7 @@
 <script src="bower/three.js/examples/js/renderers/CSS3DRenderer.js"></script>
 
 <script>
-  ///////////////////////////////////////////////////////////////////
-  // CSS3DRenderer Demo
-  // By Philippe Leefsma, July 2015
-  ///////////////////////////////////////////////////////////////////
-  //References:
-  //http://codereply.com/answer/83pofc/threejs-properly-blending-css3d-webgl.html
-  //http://learningthreejs.com/blog/2013/04/30/closing-the-gap-between-html-and-webgl/
+
   var controls, camera, glScene, cssScene, glRenderer, cssRenderer;
   ///////////////////////////////////////////////////////////////////
   // Creates WebGL Renderer
@@ -78,24 +72,11 @@
   // Creates CSS object
   //
   ///////////////////////////////////////////////////////////////////
-  function createCssObject(w, h, position, rotation) {
+  function createCssObject(id, w, h, position, rotation) {
 
-    // var html = [
-    //   '<div style="width:' + w + 'px; height:' + h + 'px;">',
-    //   '<iframe src="' + url + '" width="' + w + '" height="' + h + '">',
-    //   '</iframe>',
-    //   '</div>'
-    // ].join('\n');
-
-    var html = '<div id="app"/>hahahaah</div>';
+    var html = '<div id="'+id+'"/></div>';
     var div = document.createElement('div');
     $(div).html(html);
-
-    var script = document.createElement("script"); // Make a script DOM node
-    script.src = "public/bundle.js"; // Set it's src to the provided URL
-
-    document.head.appendChild(script); 
-
 
     var cssObject = new THREE.CSS3DObject(div);
     cssObject.position.x = position.x;
@@ -110,17 +91,20 @@
   // Creates 3d webpage object
   //
   ///////////////////////////////////////////////////////////////////
-  function create3dPage(w, h, position, rotation) {
+  function create3dPage(id, w, h, position, rotation) {
     var plane = createPlane(
         w, h,
         position,
         rotation);
     glScene.add(plane);
     var cssObject = createCssObject(
+        id,
         w, h,
         position,
         rotation);
     cssScene.add(cssObject);
+
+
   }
 
   ///////////////////////////////////////////////////////////////////
@@ -148,9 +132,29 @@
     directionalLight.position.set( -.5, .5, -1.5 ).normalize();
     glScene.add(directionalLight);
     create3dPage(
-      200, 200,
+      "map",
+      100, 100,
       new THREE.Vector3(0, 0, 0),
       new THREE.Vector3(0, 0, 0));
+
+
+    // create3dPage(
+    //   "map",
+    //   100, 100,
+    //   new THREE.Vector3(50, 0, 50),
+    //   new THREE.Vector3(0, 0, 0));
+
+    create3dPage(
+      "test",
+      100, 100,
+      new THREE.Vector3(-50, 0, -50),
+      new THREE.Vector3(0, 0, 0));
+
+    var script = document.createElement("script"); // Make a script DOM node
+    script.src = "public/bundle.js"; // Set it's src to the provided URL
+
+    document.head.appendChild(script); 
+
     update();
   }
   ///////////////////////////////////////////////////////////////////
@@ -170,7 +174,6 @@
   $(document ).ready(function() {
     initialize();
   });
-<!-- </script>
-<script src="public/bundle.js" type="text/javascript"/>
- --></body>
+</script>
+</body>
 </html>
